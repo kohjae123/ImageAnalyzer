@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>FocusEval - 이미지 선명도 평가</title>
+  <link rel="stylesheet" href="static/styles.css" />
+  <!-- Plotly.js (웨이퍼맵 사용) -->
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+<body>
+  <h1>FocusEval</h1>
+  <div class="container">
+    <div class="section">
+        <h3>폴더 선택</h3>
+        <div class="input-group">
+            <input type="text" id="folderPath" placeholder="폴더 경로를 입력하세요">
+            <button id="browseBtn">Browse</button>
+        </div>
+        <div id="extensionList"></div>
+        <div id="algorithmSection" style="display: none;">
+            <select id="algorithmSelect">
+                <option value="laplacian_std">Laplacian STD</option>
+                <option value="laplacian_var">Laplacian VAR</option>
+                <option value="sobel_mean">Sobel Mean</option>
+            </select>
+            <button id="analyzeBtn">분석 시작</button>
+        </div>
+    </div>
+
+    <!-- 이미지 처리 상태바 (Progress / Status) -->
+    <div id="statusBar" style="margin:5px; color:blue; font-weight:bold;"></div>
+
+    <!-- 웨이퍼맵 & 단위 드롭다운 -->
+    <div class="wafer-container">
+      <div class="wafer-controls">
+        <label>단위:
+          <select id="unitSelect">
+            <option value="um">μm</option>
+            <option value="mm">mm</option>
+          </select>
+        </label>
+        <button id="btnResetWafer">Reset</button>
+      </div>
+      <div id="waferPlot" style="width:600px; height:600px; border:1px solid #ccc;"></div>
+    </div>
+
+    <!-- 테이블 (X, Y, score, glvMean, glvStd etc.) -->
+    <div class="table-wrapper">
+      <table id="resultTable">
+        <thead>
+          <tr>
+            <th data-col="filename">파일명 
+              <button class="filter-btn">▼</button>
+              <span class="sort-icon"></span>
+            </th>
+            <th data-col="score">선명도 
+              <button class="filter-btn">▼</button>
+              <span class="sort-icon"></span>
+            </th>
+            <th data-col="extension">확장자 
+              <button class="filter-btn">▼</button>
+              <span class="sort-icon"></span>
+            </th>
+            <th data-col="glvMean">GLV Mean
+              <button class="filter-btn">▼</button>
+              <span class="sort-icon"></span>
+            </th>
+            <th data-col="glvStd">GLV Std
+              <button class="filter-btn">▼</button>
+              <span class="sort-icon"></span>
+            </th>
+            <th data-col="xCoord">X(um)
+              <button class="filter-btn">▼</button>
+              <span class="sort-icon"></span>
+            </th>
+            <th data-col="yCoord">Y(um)
+              <button class="filter-btn">▼</button>
+              <span class="sort-icon"></span>
+            </th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+
+    <div class="preview">
+      <h2>이미지 미리보기</h2>
+      <img id="previewImg" src="" alt="미리보기" />
+    </div>
+  </div>
+
+  <script src="static/script.js"></script>
+</body>
+</html>
